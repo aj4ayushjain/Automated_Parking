@@ -1,5 +1,5 @@
 from Vehicle import Vehicle
-
+from utils import comma_sep
 
 class Slot():
     def __init__(self, number, available):
@@ -7,13 +7,9 @@ class Slot():
         self.available = available
         self.car = None
     
-    def __lt__(self, other):
-      return self.number < other.number
-
 
 class ParkingLot():
     def __init__(self, total):
-
         self.slots = []
         for num in range(total):
             self.slots.append(Slot(num + 1, True))
@@ -33,11 +29,11 @@ class ParkingLot():
         return free_slot
 
     def parking_strategy(self):
-
+    
         for slot in self.slots:
             if slot.available:
                 return slot
-
+        
         return None
 
     def slot_with_age(self, age):
@@ -47,7 +43,7 @@ class ParkingLot():
             if not slot.available and slot.car.drivers_age == age:
                 result.append(str(slot.number))
 
-        return ",".join(result)
+        return comma_sep(result)
 
     def slot_with_reg_no(self, reg_no):
 
@@ -58,11 +54,10 @@ class ParkingLot():
         return None
 
     def exit(self, slot_no):
-
         for slot in self.slots:
             if int(slot.number) == slot_no and not slot.available:
-                slot.available = True
-                return slot
+              slot.available = True
+              return slot
         return None
 
     def reg_no_with_age(self, age):
@@ -71,4 +66,6 @@ class ParkingLot():
             if not slot.available and slot.car.drivers_age == age:
                 result.append(str(slot.car.reg_no))
 
-        return ",".join(result)
+        return comma_sep(result)
+
+    

@@ -1,4 +1,5 @@
 from ParkingLot import ParkingLot
+import sys
 
 def parse_input(content):
   try:
@@ -12,6 +13,7 @@ def parse_input(content):
         n = line.strip().split()
         #print(n)
 
+        # All the operations to be perfomed in the parking lot
         if n[0] == "Park":
           slot = parking_lot.park(n[1], n[3])
           if slot:
@@ -21,21 +23,18 @@ def parse_input(content):
         elif n[0] == "Slot_numbers_for_driver_of_age":
           slots = parking_lot.slot_with_age(n[1])
           if slots:
-              # Comma separated slot number for driver whose car drivers are of specified age
               print(slots)
           else:
-              # if none returned
               print("No car with driver age {} parked".format(n[1]))
         elif n[0] == "Slot_number_for_car_with_number":
           slot_number = parking_lot.slot_with_reg_no(n[1])
           if slot_number:
               print(slot_number)
           else:
-              # when no car is present with the specified registration number
               print("No car with registration number {} parked".format(n[1]))
         elif n[0] == "Leave":
-
           empty_slot = parking_lot.exit(int(n[1]))
+
           if empty_slot is not None:
             print("Slot number {} vacated, the car with vehicle registration number {} left space, "
                               "the driver of the car was of age {}".format(n[1], empty_slot.car.registration_no, empty_slot.car.drivers_age))
@@ -59,6 +58,8 @@ def parse_input(content):
 
 if __name__ == "__main__":
     filename = 'input.txt'
+    if len(sys.argv) > 1 :
+      filename = sys.argv[1]
     try:
       with open(filename, 'r') as f:
         content = f.readlines()
